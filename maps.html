@@ -348,7 +348,8 @@ Select an area on the map to generate command...
         
         // Map tile layers
         const tileLayers = {
-            osm: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            osm: 'https://localosm.dggs.cloud/tile/{z}/{x}/{y}.png',
+            real-osm: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             satellite: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             terrain: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'
         };
