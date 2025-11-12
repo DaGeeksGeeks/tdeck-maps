@@ -443,9 +443,7 @@ def main():
     
     # Method selection (mutually exclusive)
     method_group = parser.add_mutually_exclusive_group(required=True)
-    method_group.add_argument('--region', type=str, 
-                        choices=['north_america', 'usa', 'canada', 'mexico', 'california', 'texas', 'alaska'],
-                        help='Predefined region')
+    method_group.add_argument('--region', type=str, help='Predefined region')
     method_group.add_argument('--city', type=str, help='City name (e.g., "San Francisco" or "Portland, Oregon")')
     method_group.add_argument('--cities', type=str, help='Multiple cities separated by semicolons (e.g., "San Francisco; Oakland; San Jose")')
     method_group.add_argument('--coords', action='store_true', help='Use custom coordinates (requires --north, --south, --east, --west)')
