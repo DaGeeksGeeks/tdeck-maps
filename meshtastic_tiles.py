@@ -142,7 +142,8 @@ class MeshtasticTileGenerator:
     def get_tile_url(self, x, y, zoom, source="osm"):
         """Get tile URL for different map sources"""
         sources = {
-            "osm": f"https://tile.openstreetmap.org/{zoom}/{x}/{y}.png",
+            "osm": f"https://localosm.dggs.cloud/tile/{zoom}/{x}/{y}.png",
+            "real-osm": f"https://tile.openstreetmap.org/{zoom}/{x}/{y}.png",
             "satellite": f"https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{zoom}/{y}/{x}",
             "terrain": f"https://tile.opentopomap.org/{zoom}/{x}/{y}.png",
             "cycle": f"https://tile.thunderforest.com/cycle/{zoom}/{x}/{y}.png"
