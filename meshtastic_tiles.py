@@ -304,48 +304,137 @@ class MeshtasticTileGenerator:
 def get_region_bounds(region):
     """Get predefined bounds for common regions"""
     regions = {
-        'north_america': {
-            'north': 83.0,   # Northern Canada/Alaska
-            'south': 7.0,    # Southern Mexico/Central America
-            'east': -52.0,   # Eastern Canada (Newfoundland)
-            'west': -168.0   # Western Alaska
-        },
-        'usa': {
-            'north': 49.0,   # Canadian border
-            'south': 24.0,   # Southern Florida/Texas
-            'east': -66.0,   # Eastern seaboard
-            'west': -125.0   # West coast
-        },
-        'canada': {
-            'north': 83.0,   # Arctic islands
-            'south': 41.0,   # Southern Ontario
-            'east': -52.0,   # Newfoundland
-            'west': -141.0   # Alaska border
-        },
-        'mexico': {
-            'north': 32.7,   # US border
-            'south': 14.5,   # Guatemala border
-            'east': -86.7,   # Eastern coast
-            'west': -117.1   # Western coast
-        },
-        'california': {
-            'north': 42.0,   # Oregon border (correct)
-            'south': 32.5,   # Mexico border (should be 32.534 to be exact)
-            'east': -114.131, # Nevada/Arizona border (more precise)
-            'west': -124.409  # Pacific coast (more precise)
-        },
-        'texas': {
-            'north': 36.5,   # Oklahoma border
-            'south': 25.8,   # Mexico border
-            'east': -93.5,   # Louisiana border
-            'west': -106.6   # New Mexico border
-        },
-        'alaska': {
-            'north': 71.4,   # Arctic Ocean
-            'south': 54.4,   # Aleutian Islands
-            'east': -129.9,  # Canadian border
-            'west': -172.4   # Aleutian Islands
-        }
+        # =========================
+        # UNITED KINGDOM — NATIONAL
+        # =========================
+        'united_kingdom': {'north': 60.9, 'south': 49.8, 'east': 1.8, 'west': -8.7},
+
+        # -------------------------
+        # UK — COUNTRIES
+        # -------------------------
+        'england':  {'north': 55.9, 'south': 49.9, 'east': 1.8,  'west': -6.4},
+        'scotland': {'north': 60.9, 'south': 54.5, 'east': -0.1, 'west': -8.7},
+        'wales':    {'north': 53.5, 'south': 51.3, 'east': -2.6, 'west': -5.5},
+        'northern_ireland': {'north': 55.3, 'south': 54.0, 'east': -5.4, 'west': -8.2},
+
+        # -------------------------
+        # UK — ENGLISH REGIONS (NUTS1-style)
+        # -------------------------
+        'north_east_england':      {'north': 55.8, 'south': 54.5, 'east': -0.8, 'west': -2.7},
+        'north_west_england':      {'north': 55.2, 'south': 53.3, 'east': -1.9, 'west': -3.6},
+        'yorks_humber':            {'north': 54.5, 'south': 53.2, 'east': 0.1,  'west': -2.6},
+        'east_midlands':           {'north': 53.6, 'south': 52.7, 'east': 0.3,  'west': -2.2},
+        'west_midlands_region':    {'north': 53.2, 'south': 52.2, 'east': -1.4, 'west': -3.1},
+        'east_of_england':         {'north': 52.9, 'south': 51.4, 'east': 1.8,  'west': -0.7},
+        'south_east_england':      {'north': 52.2, 'south': 50.7, 'east': 1.8,  'west': -2.0},
+        'south_west_england':      {'north': 51.7, 'south': 49.9, 'east': -1.6, 'west': -6.4},
+        'greater_london_region':   {'north': 51.72,'south': 51.25,'east': 0.33, 'west': -0.55},
+
+        # -------------------------
+        # UK — MAJOR METROPOLITAN AREAS
+        # -------------------------
+        'london':               {'north': 51.72, 'south': 51.25, 'east': 0.33,  'west': -0.55},
+        'greater_manchester':   {'north': 53.65, 'south': 53.35, 'east': -2.10, 'west': -2.55},
+        'birmingham_west_mids': {'north': 52.60, 'south': 52.35, 'east': -1.70, 'west': -2.10},
+        'liverpool_merseyside': {'north': 53.50, 'south': 53.30, 'east': -2.80, 'west': -3.10},
+        'leeds_west_yorkshire': {'north': 53.90, 'south': 53.70, 'east': -1.35, 'west': -1.70},
+        'sheffield_s_yorkshire': {'north': 53.45, 'south': 53.30, 'east': -1.35, 'west': -1.60},
+        'newcastle_tyneside':   {'north': 55.05, 'south': 54.90, 'east': -1.45, 'west': -1.75},
+        'nottingham':           {'north': 53.00, 'south': 52.85, 'east': -1.05, 'west': -1.25},
+        'bristol':              {'north': 51.55, 'south': 51.35, 'east': -2.45, 'west': -2.75},
+        'cardiff':              {'north': 51.55, 'south': 51.40, 'east': -3.10, 'west': -3.35},
+        'glasgow':              {'north': 55.95, 'south': 55.75, 'east': -4.05, 'west': -4.45},
+        'edinburgh':            {'north': 55.98, 'south': 55.86, 'east': -3.10, 'west': -3.35},
+        'belfast':              {'north': 54.65, 'south': 54.50, 'east': -5.80, 'west': -6.10},
+        'cambridge':            {'north': 52.25, 'south': 52.15, 'east': 0.20,  'west': 0.00},
+        'oxford':               {'north': 51.80, 'south': 51.70, 'east': -1.20, 'west': -1.35},
+
+        # -------------------------
+        # UK — COUNTIES (starter set; extend as needed)
+        # (Ceremonial/unitary mix chosen for practicality in bounding boxes)
+        # -------------------------
+        'greater_london':   {'north': 51.72, 'south': 51.25, 'east': 0.33,  'west': -0.55},
+        'kent':             {'north': 51.50, 'south': 50.90, 'east': 1.45,  'west': 0.15},
+        'essex':            {'north': 52.10, 'south': 51.50, 'east': 1.30,  'west': 0.15},
+        'surrey':           {'north': 51.45, 'south': 51.10, 'east': -0.10, 'west': -0.90},
+        'hampshire':        {'north': 51.40, 'south': 50.70, 'east': -0.70, 'west': -1.90},
+        'berkshire':        {'north': 51.55, 'south': 51.30, 'east': -0.45, 'west': -1.60},
+        'oxfordshire':      {'north': 52.20, 'south': 51.45, 'east': -0.90, 'west': -1.90},
+        'buckinghamshire':  {'north': 52.15, 'south': 51.48, 'east': -0.45, 'west': -1.20},
+        'hertfordshire':    {'north': 52.10, 'south': 51.60, 'east': 0.05,  'west': -0.80},
+        'cambridgeshire':   {'north': 52.60, 'south': 52.00, 'east': 0.55,  'west': -0.45},
+        'norfolk':          {'north': 53.30, 'south': 52.35, 'east': 1.75,  'west': 0.20},
+        'suffolk':          {'north': 52.60, 'south': 51.90, 'east': 1.80,  'west': 0.30},
+        'lincolnshire':     {'north': 54.10, 'south': 52.70, 'east': 0.40,  'west': -0.90},
+        'north_yorkshire':  {'north': 54.50, 'south': 53.70, 'east': -0.40, 'west': -2.60},
+        'west_yorkshire':   {'north': 53.95, 'south': 53.63, 'east': -1.20, 'west': -1.95},
+        'south_yorkshire':  {'north': 53.60, 'south': 53.25, 'east': -1.00, 'west': -1.85},
+        'lancashire':       {'north': 54.25, 'south': 53.45, 'east': -2.15, 'west': -3.20},
+        'merseyside':       {'north': 53.60, 'south': 53.25, 'east': -2.70, 'west': -3.25},
+        'cheshire':         {'north': 53.45, 'south': 52.95, 'east': -2.20, 'west': -3.10},
+        'greater_manchester_county': {'north': 53.65, 'south': 53.35, 'east': -2.05, 'west': -2.60},
+        'derbyshire':       {'north': 53.55, 'south': 52.75, 'east': -1.25, 'west': -2.15},
+        'nottinghamshire':  {'north': 53.45, 'south': 52.85, 'east': -0.75, 'west': -1.45},
+        'leicestershire':   {'north': 52.90, 'south': 52.45, 'east': -0.60, 'west': -1.55},
+        'staffordshire':    {'north': 53.35, 'south': 52.45, 'east': -1.45, 'west': -2.30},
+        'warwickshire':     {'north': 52.60, 'south': 52.10, 'east': -1.10, 'west': -1.90},
+        'gloucestershire':  {'north': 52.15, 'south': 51.55, 'east': -1.55, 'west': -2.60},
+        'somerset':         {'north': 51.45, 'south': 50.90, 'east': -2.25, 'west': -3.75},
+        'dorset':           {'north': 51.05, 'south': 50.55, 'east': -1.65, 'west': -2.95},
+        'devon':            {'north': 51.25, 'south': 50.20, 'east': -2.90, 'west': -4.70},
+        'cornwall':         {'north': 50.75, 'south': 49.95, 'east': -4.35, 'west': -5.75},
+        'bristol_unitary':  {'north': 51.55, 'south': 51.40, 'east': -2.45, 'west': -2.70},
+        'tyne_and_wear':    {'north': 55.10, 'south': 54.85, 'east': -1.35, 'west': -1.80},
+        'county_durham':    {'north': 54.95, 'south': 54.45, 'east': -1.30, 'west': -2.35},
+        'northumberland':   {'north': 55.80, 'south': 54.80, 'east': -1.30, 'west': -2.50},
+        'powys':            {'north': 52.95, 'south': 51.80, 'east': -2.90, 'west': -3.90},
+        'gwynedd':          {'north': 53.30, 'south': 52.55, 'east': -3.50, 'west': -4.80},
+
+        # =========================
+        # UNITED STATES — NATIONAL
+        # =========================
+        'united_states': {'north': 49.4, 'south': 24.5, 'east': -66.9, 'west': -124.8},  # CONUS-ish
+
+        # -------------------------
+        # US — STATES (starter set; extend to all 50 + DC)
+        # -------------------------
+        'california': {'north': 42.0, 'south': 32.5, 'east': -114.13, 'west': -124.41},
+        'texas':      {'north': 36.5, 'south': 25.8, 'east': -93.5,  'west': -106.6},
+        'florida':    {'north': 31.1, 'south': 24.4, 'east': -80.0,  'west': -87.7},
+        'new_york':   {'north': 45.0, 'south': 40.5, 'east': -71.8,  'west': -79.8},
+        'illinois':   {'north': 42.5, 'south': 36.9, 'east': -87.4,  'west': -91.5},
+        'pennsylvania': {'north': 42.5, 'south': 39.7, 'east': -74.7, 'west': -80.6},
+        'ohio':       {'north': 41.9, 'south': 38.4, 'east': -80.5,  'west': -84.9},
+        'georgia':    {'north': 35.0, 'south': 30.4, 'east': -80.8,  'west': -85.6},
+        'north_carolina': {'north': 36.6, 'south': 33.8, 'east': -75.4, 'west': -84.3},
+        'michigan':   {'north': 48.3, 'south': 41.7, 'east': -82.1,  'west': -90.4},
+        'washington': {'north': 49.1, 'south': 45.5, 'east': -116.9, 'west': -124.9},
+        'arizona':    {'north': 37.1, 'south': 31.2, 'east': -109.0, 'west': -114.9},
+        'colorado':   {'north': 41.1, 'south': 36.9, 'east': -102.0, 'west': -109.1},
+        'massachusetts': {'north': 42.9, 'south': 41.2, 'east': -69.9, 'west': -73.6},
+        'new_jersey': {'north': 41.4, 'south': 38.9, 'east': -73.9,  'west': -75.6},
+        'dc':         {'north': 38.995, 'south': 38.79, 'east': -76.91, 'west': -77.12},
+
+        # -------------------------
+        # US — MAJOR METROPOLITAN AREAS (starter set)
+        # -------------------------
+        'new_york_city':     {'north': 41.20, 'south': 40.40, 'east': -73.55, 'west': -74.30},
+        'los_angeles':       {'north': 34.40, 'south': 33.65, 'east': -118.00,'west': -118.90},
+        'chicago':           {'north': 42.10, 'south': 41.55, 'east': -87.40, 'west': -87.95},
+        'dallas_fort_worth': {'north': 33.25, 'south': 32.45, 'east': -96.50, 'west': -97.50},
+        'houston':           {'north': 30.20, 'south': 29.45, 'east': -95.00, 'west': -95.90},
+        'atlanta':           {'north': 34.10, 'south': 33.45, 'east': -84.10, 'west': -84.70},
+        'miami':             {'north': 25.99, 'south': 25.40, 'east': -80.00, 'west': -80.40},
+        'washington_dc':     {'north': 39.05, 'south': 38.70, 'east': -76.80, 'west': -77.35},
+        'san_francisco_bay': {'north': 38.35, 'south': 37.10, 'east': -121.50,'west': -123.00},
+        'seattle':           {'north': 47.85, 'south': 47.35, 'east': -122.00,'west': -122.55},
+        'boston':            {'north': 42.55, 'south': 42.15, 'east': -70.95, 'west': -71.25},
+        'phoenix':           {'north': 33.80, 'south': 33.15, 'east': -111.60,'west': -112.45},
+        'philadelphia':      {'north': 40.20, 'south': 39.80, 'east': -74.90, 'west': -75.35},
+        'detroit':           {'north': 42.55, 'south': 42.10, 'east': -82.85, 'west': -83.30},
+        'minneapolis_st_paul': {'north': 45.25, 'south': 44.75, 'east': -92.80, 'west': -93.60},
+        'denver':            {'north': 39.95, 'south': 39.55, 'east': -104.70,'west': -105.10},
+        'san_diego':         {'north': 33.15, 'south': 32.50, 'east': -116.90,'west': -117.30}
     }
     return regions.get(region.lower())
 
